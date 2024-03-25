@@ -1,8 +1,8 @@
 <?php
 
-namespace controller;
+namespace controller\app\controller;
 
-use model\ApiKey;
+use controller\app\model\ApiKey;
 
 class KeyGenerator {
 

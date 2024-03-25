@@ -1,12 +1,13 @@
 <?php
 
-namespace controller;
+namespace controller\app\controller;
 use AllowDynamicProperties;
-use model\Annonce;
-use model\Annonceur;
-use model\Departement;
-use model\Photo;
-use model\Categorie;
+use controller\app\model\Annonce;
+use controller\app\model\Annonceur;
+use controller\app\model\Departement;
+use controller\app\model\Photo;
+use controller\app\model\Categorie;
+use function controller\isEmail;
 
 #[AllowDynamicProperties] class item {
     public function __construct(){

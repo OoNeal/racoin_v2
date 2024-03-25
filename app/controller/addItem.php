@@ -1,9 +1,9 @@
 <?php
 
-namespace controller;
+namespace controller\app\controller;
 
-use model\Annonce;
-use model\Annonceur;
+use controller\app\model\Annonce;
+use controller\app\model\Annonceur;
 
 class addItem
 {

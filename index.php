@@ -1,16 +1,16 @@
 <?php
 require 'vendor/autoload.php';
 
-use controller\getCategorie;
-use controller\getDepartment;
-use controller\index;
-use controller\item;
-use db\connection;
+use controller\app\controller\getCategorie;
+use controller\app\controller\getDepartment;
+use controller\app\controller\index;
+use controller\app\controller\item;
+use controller\app\db\connection;
 
-use model\Annonce;
-use model\Categorie;
-use model\Annonceur;
-use model\Departement;
+use controller\app\model\Annonce;
+use controller\app\model\Categorie;
+use controller\app\model\Annonceur;
+use controller\app\model\Departement;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -84,13 +84,13 @@ $app->get('/item/{n}', function ($request, $response, $arg) use ($twig, $menu, $
 });
 
 $app->get('/add', function () use ($twig, $app, $menu, $chemin, $cat, $dpt) {
-    $ajout = new controller\addItem();
+    $ajout = new \controller\app\controller\addItem();
     $ajout->addItemView($twig, $menu, $chemin, $cat->getCategories(), $dpt->getAllDepartments());
 });
 
 $app->post('/add', function ($request) use ($twig, $app, $menu, $chemin) {
     $allPostVars = $request->getParsedBody();
-    $ajout       = new controller\addItem();
+    $ajout       = new \controller\app\controller\addItem();
     $ajout->addNewItem($twig, $menu, $chemin, $allPostVars);
 });
 
@@ -114,39 +114,39 @@ $app->map(['GET, POST'], '/item/{id}/confirm', function ($request, $response, $a
 });
 
 $app->get('/search', function () use ($twig, $menu, $chemin, $cat) {
-    $s = new controller\Search();
+    $s = new \controller\app\controller\Search();
     $s->show($twig, $menu, $chemin, $cat->getCategories());
 });
 
 
 $app->post('/search', function ($request, $response) use ($app, $twig, $menu, $chemin, $cat) {
     $array = $request->getParsedBody();
-    $s     = new controller\Search();
+    $s     = new \controller\app\controller\Search();
     $s->research($array, $twig, $menu, $chemin, $cat->getCategories());
 
 });
 
 $app->get('/annonceur/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
     $n         = $arg['n'];
-    $annonceur = new controller\viewAnnonceur();
+    $annonceur = new \controller\app\controller\viewAnnonceur();
     $annonceur->afficherAnnonceur($twig, $menu, $chemin, $n, $cat->getCategories());
 });
 
 $app->get('/del/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin) {
     $n    = $arg['n'];
-    $item = new controller\item();
+    $item = new \controller\app\controller\item();
     $item->supprimerItemGet($twig, $menu, $chemin, $n);
 });
 
 $app->post('/del/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
     $n    = $arg['n'];
-    $item = new controller\item();
+    $item = new \controller\app\controller\item();
     $item->supprimerItemPost($twig, $menu, $chemin, $n, $cat->getCategories());
 });
 
 $app->get('/cat/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
     $n = $arg['n'];
-    $categorie = new controller\getCategorie();
+    $categorie = new \controller\app\controller\getCategorie();
     $categorie->displayCategorie($twig, $menu, $chemin, $cat->getCategories(), $n);
 });
 
@@ -247,14 +247,14 @@ $app->group('/api', function () use ($app, $twig, $menu, $chemin, $cat) {
     });
 
     $app->get('/key', function () use ($app, $twig, $menu, $chemin, $cat) {
-        $kg = new controller\KeyGenerator();
+        $kg = new \controller\app\controller\KeyGenerator();
         $kg->show($twig, $menu, $chemin, $cat->getCategories());
     });
 
     $app->post('/key', function () use ($app, $twig, $menu, $chemin, $cat) {
         $nom = $_POST['nom'];
 
-        $kg = new controller\KeyGenerator();
+        $kg = new \controller\app\controller\KeyGenerator();
         $kg->generateKey($twig, $menu, $chemin, $cat->getCategories(), $nom);
     });
 });

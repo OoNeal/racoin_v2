@@ -1,6 +1,6 @@
 <?php
 
-namespace model;
+namespace controller\app\model;
 
 class Region extends \Illuminate\Database\Eloquent\Model {
     protected $table = 'region';
