@@ -1,13 +1,13 @@
 <?php
 namespace controller\app;
 
-require '../vendor/autoload.php';
+require 'vendor/autoload.php';
 
-use controller\app\controller\getCategorie;
-use controller\app\controller\getDepartment;
-use controller\app\controller\index;
-use controller\app\controller\item;
-use controller\app\db\connection;
+use controller\app\controller\GetCategorie;
+use controller\app\controller\GetDepartment;
+use controller\app\controller\Index;
+use controller\app\controller\Item;
+use controller\app\db\Connection;
 
 use controller\app\model\Annonce;
 use controller\app\model\Categorie;
@@ -20,7 +20,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 
-connection::createConn();
+Connection::createConn();
 
 // Initialisation de Slim
 $app = new App([
@@ -72,10 +72,10 @@ $menu = [
 $chemin = dirname($_SERVER['SCRIPT_NAME']);
 
 $cat = new getCategorie();
-$dpt = new getDepartment();
+$dpt = new GetDepartment();
 
 $app->get('/', function () use ($twig, $menu, $chemin, $cat) {
-    $index = new index();
+    $index = new Index();
     $index->displayAllAnnonce($twig, $menu, $chemin, $cat->getCategories());
 });
 
@@ -260,6 +260,5 @@ $app->group('/api', function () use ($app, $twig, $menu, $chemin, $cat) {
         $kg->generateKey($twig, $menu, $chemin, $cat->getCategories(), $nom);
     });
 });
-
 
 $app->run();
