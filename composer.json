@@ -9,9 +9,7 @@
     },
     "autoload":{
         "psr-4":{
-            "controller":"",
-            "model":"",
-            "db":""
+            "controller\\app\\":"app/"
         }
     },
     "config": {
