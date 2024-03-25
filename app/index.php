@@ -1,5 +1,7 @@
 <?php
-require 'vendor/autoload.php';
+namespace controller\app;
+
+require '../vendor/autoload.php';
 
 use controller\app\controller\getCategorie;
 use controller\app\controller\getDepartment;
