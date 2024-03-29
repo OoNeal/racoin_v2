@@ -30,7 +30,6 @@ return function (App $app): void {
     $loader = new FilesystemLoader(__DIR__ . '/../template');
     $twig = new Environment($loader);
 
-    // Ajout d'un middleware pour le trailing slash
     $app->add(function (Request $request, RequestHandlerInterface $handler) use ($responseFactory) {
         $uri = $request->getUri();
         $path = $uri->getPath();
@@ -46,7 +45,6 @@ return function (App $app): void {
         return $handler->handle($request);
     });
 
-
     if (!isset($_SESSION)) {
         session_start();
         $_SESSION['formStarted'] = true;
@@ -56,8 +54,6 @@ return function (App $app): void {
         $token = md5(uniqid(rand(), TRUE));
         $_SESSION['token'] = $token;
         $_SESSION['token_time'] = time();
-    } else {
-        $token = $_SESSION['token'];
     }
 
     $menu = [
@@ -77,74 +73,73 @@ return function (App $app): void {
     $app->get('/item/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
         $n = $arg['n'];
         $item = new ObjetControlleur();
-        $item->afficherObjet($twig, $menu, $chemin, $n, $cat->getCategories());
+        return $item->afficherObjet($twig, $menu, $chemin, $n, $cat->getCategories());
     });
 
     $app->get('/add', function () use ($twig, $app, $menu, $chemin, $cat, $dpt) {
         $ajout = new ObjetControlleur();
-        $ajout->ajouterObjetVue($twig, $menu, $chemin, $cat->getCategories(), $dpt->getAllDepartments());
+        return $ajout->ajouterObjetVue($twig, $menu, $chemin, $cat->getCategories(), $dpt->getAllDepartments());
     });
 
     $app->post('/add', function ($request) use ($twig, $app, $menu, $chemin) {
         $allPostVars = $request->getParsedBody();
         $ajout = new ObjetControlleur();
-        $ajout->ajouterNouvelObjet($twig, $menu, $chemin, $allPostVars);
+        return $ajout->ajouterNouvelObjet($twig, $menu, $chemin, $allPostVars);
     });
 
     $app->get('/item/{id}/edit', function ($request, $response, $arg) use ($twig, $menu, $chemin, $objetControlleur) {
         $id = $arg['id'];
-        $objetControlleur->modifierObjetGet($twig, $menu, $chemin, $id);
+        return $objetControlleur->modifierObjetGet($twig, $menu, $chemin, $id);
     });
     $app->post('/item/{id}/edit', function ($request, $response, $arg) use ($twig, $app, $menu, $chemin, $cat, $dpt, $objetControlleur) {
         $id = $arg['id'];
         $allPostVars = $request->getParsedBody();
-        $objetControlleur->modifierObjetPost($twig, $menu, $chemin, $id, $allPostVars, $cat->getCategories(), $dpt->getAllDepartments());
+        return $objetControlleur->modifierObjetPost($twig, $menu, $chemin, $id, $allPostVars, $cat->getCategories(), $dpt->getAllDepartments());
     });
 
     $app->map(['GET, POST'], '/item/{id}/confirm', function ($request, $response, $arg) use ($twig, $app, $menu, $chemin, $objetControlleur) {
         $id = $arg['id'];
         $allPostVars = $request->getParsedBody();
-        $objetControlleur->confirmerModification($twig, $menu, $chemin, $id, $allPostVars);
+        return $objetControlleur->confirmerModification($twig, $menu, $chemin, $id, $allPostVars);
     });
 
     $app->get('/search', function () use ($twig, $menu, $chemin, $cat) {
         $s = new Search();
-        $s->show($twig, $menu, $chemin, $cat->getCategories());
+        return $s->show($twig, $menu, $chemin, $cat->getCategories());
     });
 
 
     $app->post('/search', function ($request, $response) use ($app, $twig, $menu, $chemin, $cat) {
         $array = $request->getParsedBody();
         $s = new Search();
-        $s->research($array, $twig, $menu, $chemin, $cat->getCategories());
-
+        return $s->research($array, $twig, $menu, $chemin, $cat->getCategories());
     });
 
     $app->get('/annonceur/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
         $n = $arg['n'];
         $annonceur = new viewAnnonceur();
-        $annonceur->afficherAnnonceur($twig, $menu, $chemin, $n, $cat->getCategories());
+        return $annonceur->afficherAnnonceur($twig, $menu, $chemin, $n, $cat->getCategories());
     });
 
     $app->get('/del/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin) {
         $n = $arg['n'];
         $item = new ObjetControlleur();
-        $item->supprimerObjetGet($twig, $menu, $chemin, $n);
+        return $item->supprimerObjetGet($twig, $menu, $chemin, $n);
     });
 
     $app->post('/del/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
         $n = $arg['n'];
         $item = new ObjetControlleur();
-        $item->supprimerObjetPost($twig, $menu, $chemin, $n, $cat->getCategories());
+        return $item->supprimerObjetPost($twig, $menu, $chemin, $n, $cat->getCategories());
     });
 
     $app->get('/cat/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
         $n = $arg['n'];
         $categorie = new \controller\app\controller\getCategorie();
-        $categorie->displayCategorie($twig, $menu, $chemin, $cat->getCategories(), $n);
+        return $categorie->displayCategorie($twig, $menu, $chemin, $cat->getCategories(), $n);
     });
 
-    $app->get('/api(/)', function () use ($twig, $menu, $chemin, $cat) {
+    $app->get('/api[/]', function () use ($twig, $menu, $chemin, $cat) {
         $template = $twig->load('api.html.twig');
         $menu = array(
             array(
@@ -156,7 +151,12 @@ return function (App $app): void {
                 'text' => 'Api'
             )
         );
-        echo $template->render(array('breadcrumb' => $menu, 'chemin' => $chemin));
+        $html = $template->render(array('breadcrumb' => $menu, 'chemin' => $chemin));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     });
 
     $app->group('/api', function (RouteCollectorProxy $group) use ($cat, $chemin, $menu, $twig) {
@@ -231,7 +231,7 @@ return function (App $app): void {
 
         $group->get('/key', function ($request, $response) use ($twig, $menu, $chemin, $cat) {
             $kg = new KeyGenerator();
-            $kg->show($twig, $menu, $chemin, $cat->getCategories());
+            return $kg->show($twig, $menu, $chemin, $cat->getCategories());
         });
 
         $group->post('/key', function ($request, $response) use ($twig, $menu, $chemin, $cat) {
@@ -239,7 +239,7 @@ return function (App $app): void {
             $nom = $parsedBody['nom'];
 
             $kg = new KeyGenerator();
-            $kg->generateKey($twig, $menu, $chemin, $cat->getCategories(), $nom);
+            return $kg->generateKey($twig, $menu, $chemin, $cat->getCategories(), $nom);
         });
 
     });

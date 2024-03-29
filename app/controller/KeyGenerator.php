@@ -3,6 +3,7 @@
 namespace controller\app\controller;
 
 use controller\app\model\ApiKey;
+use Slim\Psr7\Response;
 
 class KeyGenerator {
 
@@ -14,7 +15,12 @@ class KeyGenerator {
             array('href' => $chemin."/search",
                 'text' => "Recherche")
         );
-        return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+        $html = $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     function generateKey($twig, $menu, $chemin, $cat, $nom) {
@@ -29,7 +35,12 @@ class KeyGenerator {
                     'text' => "Recherche")
             );
 
-            return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+            $html = $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+
+            $response = new Response();
+            $response->getBody()->write($html);
+
+            return $response;
         } else {
             $template = $twig->load("key-generator-result.html.twig");
             $menu = array(
@@ -48,7 +59,12 @@ class KeyGenerator {
             $apikey->name_key = htmlentities($nom);
             $apikey->save();
 
-            return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat, "key" => $key));
+            $html = $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat, "key" => $key));
+
+            $response = new Response();
+            $response->getBody()->write($html);
+
+            return $response;
         }
 
     }

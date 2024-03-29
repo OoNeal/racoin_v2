@@ -4,6 +4,7 @@ namespace controller\app\controller;
 
 use controller\app\model\Annonce;
 use controller\app\model\Categorie;
+use Slim\Psr7\Response;
 
 class Search {
 
@@ -15,7 +16,12 @@ class Search {
             array('href' => $chemin."/search",
                 'text' => "Recherche")
         );
-        return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+        $html = $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     function research($array, $twig, $menu, $chemin, $cat) {
@@ -70,10 +76,12 @@ class Search {
             $annonce = $query->get();
         }
 
-        return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "annonces" => $annonce, "categories" => $cat));
+        $html = $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "annonces" => $annonce, "categories" => $cat));
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
 
     }
 
 }
-
-?>

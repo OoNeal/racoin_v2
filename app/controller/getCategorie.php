@@ -6,6 +6,7 @@ use controller\app\model\Categorie;
 use controller\app\model\Annonce;
 use controller\app\model\Photo;
 use controller\app\model\Annonceur;
+use Slim\Psr7\Response;
 
 class getCategorie {
 
@@ -45,10 +46,15 @@ class getCategorie {
         );
 
         $this->getCategorieContent($chemin, $n);
-        return $template->render(array(
+        $html = $template->render(array(
             "breadcrumb" => $menu,
             "chemin" => $chemin,
             "categories" => $cat,
             "annonces" => $this->annonce));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 }

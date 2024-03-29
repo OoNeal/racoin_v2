@@ -8,6 +8,7 @@ use controller\app\model\Annonceur;
 use controller\app\model\Categorie;
 use controller\app\model\Departement;
 use controller\app\model\Photo;
+use Slim\Psr7\Response;
 
 #[AllowDynamicProperties] class ObjetControlleur
 {
@@ -45,7 +46,7 @@ use controller\app\model\Photo;
         $this->departement = Departement::find($this->annonce->id_departement);
         $this->photo = Photo::where('id_annonce', '=', $n)->get();
         $template = $twig->load("item.html.twig");
-        return $template->render(
+        $html = $template->render(
             array(
                 "breadcrumb" => $menu,
                 "chemin" => $chemin,
@@ -55,6 +56,11 @@ use controller\app\model\Photo;
                 "photo" => $this->photo,
                 "categories" => $cat
             ));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     /**
@@ -63,17 +69,23 @@ use controller\app\model\Photo;
      * @param $chemin
      * @param $cat
      * @param $dpt
+     * @return Response
      */
-    function ajouterObjetVue($twig, $menu, $chemin, $cat, $dpt)
+    function ajouterObjetVue($twig, $menu, $chemin, $cat, $dpt): Response
     {
         $template = $twig->load("add.html.twig");
-        return $template->render(
+        $html = $template->render(
             array(
                 "breadcrumb" => $menu,
                 "chemin" => $chemin,
                 "categories" => $cat,
                 "departements" => $dpt
             ));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     /**
@@ -101,7 +113,12 @@ use controller\app\model\Photo;
             $annonceur->annonce()->save($annonce);
 
             $template = $twig->load("add-confirm.html.twig");
-            return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
+            $html = $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
+
+            $response = new Response();
+            $response->getBody()->write($html);
+
+            return $response;
         }
     }
 
@@ -191,15 +208,20 @@ use controller\app\model\Photo;
      */
     function supprimerObjetGet($twig, $menu, $chemin, $n)
     {
+        $response = new Response();
         $this->annonce = Annonce::find($n);
         if (!isset($this->annonce)) {
-            echo "404";
-            return;
+            $response->getBody()->write("404");
         }
         $template = $twig->load("delGet.html.twig");
-        return $template->render(array("breadcrumb" => $menu,
+        $html = $template->render(array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     /**
@@ -220,11 +242,16 @@ use controller\app\model\Photo;
         }
 
         $template = $twig->load("delPost.html.twig");
-        return $template->render(array("breadcrumb" => $menu,
+        $html = $template->render(array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce,
             "pass" => $reponse,
             "categories" => $cat));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     /**
@@ -240,9 +267,14 @@ use controller\app\model\Photo;
             return "404";
         }
         $template = $twig->load("modifyGet.html.twig");
-        return $template->render(array("breadcrumb" => $menu,
+        $html =  $template->render(array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     /**
@@ -267,7 +299,7 @@ use controller\app\model\Photo;
         }
 
         $template = $twig->load("modifyPost.html.twig");
-        return $template->render(array("breadcrumb" => $menu,
+        $html = $template->render(array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce,
             "annonceur" => $this->annonceur,
@@ -276,12 +308,18 @@ use controller\app\model\Photo;
             "departements" => $dpt,
             "dptItem" => $this->dptItem,
             "categItem" => $this->categItem));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     function confirmerModification($twig, $menu, $chemin, $allPostVars, $id)
     {
         $array = $this->formatterTableau($allPostVars);
         $errors = $this->estChampVide($array);
+        $response = new Response();
 
         // S'il y a des erreurs on redirige vers la page d'erreur
         if (!empty($errors)) {
@@ -298,7 +336,12 @@ use controller\app\model\Photo;
 
 
             $template = $twig->load("modif-confirm.html.twig");
-            return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
+            $html = $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
+            $response->getBody()->write($html);
+
+            return $response;
         }
+        $response->getBody()->write("Erreur lors de la modification");
+        return $response;
     }
 }

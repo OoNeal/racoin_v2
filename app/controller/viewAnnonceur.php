@@ -10,6 +10,7 @@ namespace controller\app\controller;
 use controller\app\model\Annonce;
 use controller\app\model\Annonceur;
 use controller\app\model\Photo;
+use Slim\Psr7\Response;
 
 class viewAnnonceur {
     public function __construct(){
@@ -36,9 +37,14 @@ class viewAnnonceur {
             $annonces[] = $a;
         }
         $template = $twig->load("annonceur.html.twig");
-        return $template->render(array('nom' => $this->annonceur,
+        $html = $template->render(array('nom' => $this->annonceur,
             "chemin" => $chemin,
             "annonces" => $annonces,
             "categories" => $cat));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 }
