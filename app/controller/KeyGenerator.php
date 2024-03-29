@@ -14,7 +14,7 @@ class KeyGenerator {
             array('href' => $chemin."/search",
                 'text' => "Recherche")
         );
-        echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+        return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
     }
 
     function generateKey($twig, $menu, $chemin, $cat, $nom) {
@@ -29,7 +29,7 @@ class KeyGenerator {
                     'text' => "Recherche")
             );
 
-            echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+            return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
         } else {
             $template = $twig->load("key-generator-result.html.twig");
             $menu = array(
@@ -48,7 +48,7 @@ class KeyGenerator {
             $apikey->name_key = htmlentities($nom);
             $apikey->save();
 
-            echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat, "key" => $key));
+            return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat, "key" => $key));
         }
 
     }

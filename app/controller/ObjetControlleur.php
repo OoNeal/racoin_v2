@@ -23,15 +23,13 @@ use controller\app\model\Photo;
      * @param $chemin
      * @param $n
      * @param $cat
-     * @return void
      */
-    function afficherObjet($twig, $menu, $chemin, $n, $cat): void
+    function afficherObjet($twig, $menu, $chemin, $n, $cat)
     {
 
         $this->annonce = Annonce::find($n);
         if (!isset($this->annonce)) {
-            echo "404";
-            return;
+            return "404";
         }
 
         $menu = array(
@@ -47,7 +45,7 @@ use controller\app\model\Photo;
         $this->departement = Departement::find($this->annonce->id_departement);
         $this->photo = Photo::where('id_annonce', '=', $n)->get();
         $template = $twig->load("item.html.twig");
-        echo $template->render(
+        return $template->render(
             array(
                 "breadcrumb" => $menu,
                 "chemin" => $chemin,
@@ -65,12 +63,11 @@ use controller\app\model\Photo;
      * @param $chemin
      * @param $cat
      * @param $dpt
-     * @return void
      */
     function ajouterObjetVue($twig, $menu, $chemin, $cat, $dpt)
     {
         $template = $twig->load("add.html.twig");
-        echo $template->render(
+        return $template->render(
             array(
                 "breadcrumb" => $menu,
                 "chemin" => $chemin,
@@ -84,7 +81,6 @@ use controller\app\model\Photo;
      * @param $menu
      * @param $chemin
      * @param $allPostVars
-     * @return void
      */
     function ajouterNouvelObjet($twig, $menu, $chemin, $allPostVars)
     {
@@ -105,132 +101,7 @@ use controller\app\model\Photo;
             $annonceur->annonce()->save($annonce);
 
             $template = $twig->load("add-confirm.html.twig");
-            echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
-        }
-    }
-
-    /**
-     * @param $twig
-     * @param $menu
-     * @param $chemin
-     * @param $n
-     * @return void
-     */
-    function supprimerObjetGet($twig, $menu, $chemin, $n)
-    {
-        $this->annonce = Annonce::find($n);
-        if (!isset($this->annonce)) {
-            echo "404";
-            return;
-        }
-        $template = $twig->load("delGet.html.twig");
-        echo $template->render(array("breadcrumb" => $menu,
-            "chemin" => $chemin,
-            "annonce" => $this->annonce));
-    }
-
-    /**
-     * @param $twig
-     * @param $menu
-     * @param $chemin
-     * @param $n
-     * @param $cat
-     * @return void
-     */
-    function supprimerObjetPost($twig, $menu, $chemin, $n, $cat)
-    {
-        $this->annonce = Annonce::find($n);
-        $reponse = false;
-        if (password_verify($_POST["pass"], $this->annonce->mdp)) {
-            $reponse = true;
-            photo::where('id_annonce', '=', $n)->delete();
-            $this->annonce->delete();
-
-        }
-
-        $template = $twig->load("delPost.html.twig");
-        echo $template->render(array("breadcrumb" => $menu,
-            "chemin" => $chemin,
-            "annonce" => $this->annonce,
-            "pass" => $reponse,
-            "categories" => $cat));
-    }
-
-    /**
-     * @param $twig
-     * @param $menu
-     * @param $chemin
-     * @param $id
-     * @return void
-     */
-    function modifierObjetGet($twig, $menu, $chemin, $id)
-    {
-        $this->annonce = Annonce::find($id);
-        if (!isset($this->annonce)) {
-            echo "404";
-            return;
-        }
-        $template = $twig->load("modifyGet.html.twig");
-        echo $template->render(array("breadcrumb" => $menu,
-            "chemin" => $chemin,
-            "annonce" => $this->annonce));
-    }
-
-    /**
-     * @param $twig
-     * @param $menu
-     * @param $chemin
-     * @param $n
-     * @param $cat
-     * @param $dpt
-     * @return void
-     */
-    function modifierObjetPost($twig, $menu, $chemin, $n, $cat, $dpt)
-    {
-        $this->annonce = Annonce::find($n);
-        $this->annonceur = Annonceur::find($this->annonce->id_annonceur);
-        $this->categItem = Categorie::find($this->annonce->id_categorie)->nom_categorie;
-        $this->dptItem = Departement::find($this->annonce->id_departement)->nom_departement;
-
-        $reponse = false;
-        var_dump($_POST["pass"]);
-        if (password_verify($_POST["pass"], $this->annonce->mdp)) {
-            $reponse = true;
-        }
-
-        $template = $twig->load("modifyPost.html.twig");
-        echo $template->render(array("breadcrumb" => $menu,
-            "chemin" => $chemin,
-            "annonce" => $this->annonce,
-            "annonceur" => $this->annonceur,
-            "pass" => $reponse,
-            "categories" => $cat,
-            "departements" => $dpt,
-            "dptItem" => $this->dptItem,
-            "categItem" => $this->categItem));
-    }
-
-    function confirmerModification($twig, $menu, $chemin, $allPostVars, $id)
-    {
-        $array = $this->formatterTableau($allPostVars);
-        $errors = $this->estChampVide($array);
-
-        // S'il y a des erreurs on redirige vers la page d'erreur
-        if (!empty($errors)) {
-            $this->afficherErreurs($twig, $menu, $chemin, $errors);
-        } // sinon on ajoute à la base et on redirige vers une page de succès
-        else {
-            $this->annonce = Annonce::find($id);
-            $idAnnonceur = $this->annonce->id_annonceur;
-            $this->annonceur = Annonceur::find($idAnnonceur);
-
-            $this->annonce = $this->CreerHtmlEntites($array, $this->annonce);
-            $this->annonceur->save();
-            $this->annonceur->annonce()->save($this->annonce);
-
-
-            $template = $twig->load("modif-confirm.html.twig");
-            echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
+            return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
         }
     }
 
@@ -274,6 +145,32 @@ use controller\app\model\Photo;
     }
 
     /**
+     * @param string $email
+     * @return false|int
+     */
+    private function estEmail(string $email): false|int
+    {
+        return (preg_match("/^[-_.[:alnum:]]+@((([[:alnum:]]|[[:alnum:]][[:alnum:]-]*[[:alnum:]])\.)+(ad|ae|aero|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|biz|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|com|coop|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gh|gi|gl|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|in|info|int|io|iq|ir|is|it|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mil|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|museum|mv|mw|mx|my|mz|na|name|nc|ne|net|nf|ng|ni|nl|no|np|nr|nt|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pro|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)$|(([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5])\.){3}([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5]))$/i", $email));
+    }
+
+    /**
+     * @param $twig
+     * @param $menu
+     * @param $chemin
+     * @param $errors
+     * @return void
+     */
+    private function afficherErreurs($twig, $menu, $chemin, $errors)
+    {
+        $template = $twig->load("add-error.html.twig");
+        return $template->render(array(
+                "breadcrumb" => $menu,
+                "chemin" => $chemin,
+                "errors" => $errors)
+        );
+    }
+
+    /**
      * @param array $array
      * @param Annonce $annonce
      * @return Annonce
@@ -290,25 +187,118 @@ use controller\app\model\Photo;
      * @param $twig
      * @param $menu
      * @param $chemin
-     * @param $errors
-     * @return void
+     * @param $n
      */
-    private function afficherErreurs($twig, $menu, $chemin, $errors): void
+    function supprimerObjetGet($twig, $menu, $chemin, $n)
     {
-        $template = $twig->load("add-error.html.twig");
-        echo $template->render(array(
-                "breadcrumb" => $menu,
-                "chemin" => $chemin,
-                "errors" => $errors)
-        );
+        $this->annonce = Annonce::find($n);
+        if (!isset($this->annonce)) {
+            echo "404";
+            return;
+        }
+        $template = $twig->load("delGet.html.twig");
+        return $template->render(array("breadcrumb" => $menu,
+            "chemin" => $chemin,
+            "annonce" => $this->annonce));
     }
 
     /**
-     * @param string $email
-     * @return false|int
+     * @param $twig
+     * @param $menu
+     * @param $chemin
+     * @param $n
+     * @param $cat
      */
-    private function estEmail(string $email): false|int
+    function supprimerObjetPost($twig, $menu, $chemin, $n, $cat)
     {
-        return (preg_match("/^[-_.[:alnum:]]+@((([[:alnum:]]|[[:alnum:]][[:alnum:]-]*[[:alnum:]])\.)+(ad|ae|aero|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|biz|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|com|coop|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gh|gi|gl|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|in|info|int|io|iq|ir|is|it|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mil|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|museum|mv|mw|mx|my|mz|na|name|nc|ne|net|nf|ng|ni|nl|no|np|nr|nt|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pro|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)$|(([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5])\.){3}([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5]))$/i", $email));
+        $this->annonce = Annonce::find($n);
+        $reponse = false;
+        if (password_verify($_POST["pass"], $this->annonce->mdp)) {
+            $reponse = true;
+            photo::where('id_annonce', '=', $n)->delete();
+            $this->annonce->delete();
+        }
+
+        $template = $twig->load("delPost.html.twig");
+        return $template->render(array("breadcrumb" => $menu,
+            "chemin" => $chemin,
+            "annonce" => $this->annonce,
+            "pass" => $reponse,
+            "categories" => $cat));
+    }
+
+    /**
+     * @param $twig
+     * @param $menu
+     * @param $chemin
+     * @param $id
+     */
+    function modifierObjetGet($twig, $menu, $chemin, $id)
+    {
+        $this->annonce = Annonce::find($id);
+        if (!isset($this->annonce)) {
+            return "404";
+        }
+        $template = $twig->load("modifyGet.html.twig");
+        return $template->render(array("breadcrumb" => $menu,
+            "chemin" => $chemin,
+            "annonce" => $this->annonce));
+    }
+
+    /**
+     * @param $twig
+     * @param $menu
+     * @param $chemin
+     * @param $n
+     * @param $cat
+     * @param $dpt
+     * */
+    function modifierObjetPost($twig, $menu, $chemin, $n, $cat, $dpt)
+    {
+        $this->annonce = Annonce::find($n);
+        $this->annonceur = Annonceur::find($this->annonce->id_annonceur);
+        $this->categItem = Categorie::find($this->annonce->id_categorie)->nom_categorie;
+        $this->dptItem = Departement::find($this->annonce->id_departement)->nom_departement;
+
+        $reponse = false;
+        var_dump($_POST["pass"]);
+        if (password_verify($_POST["pass"], $this->annonce->mdp)) {
+            $reponse = true;
+        }
+
+        $template = $twig->load("modifyPost.html.twig");
+        return $template->render(array("breadcrumb" => $menu,
+            "chemin" => $chemin,
+            "annonce" => $this->annonce,
+            "annonceur" => $this->annonceur,
+            "pass" => $reponse,
+            "categories" => $cat,
+            "departements" => $dpt,
+            "dptItem" => $this->dptItem,
+            "categItem" => $this->categItem));
+    }
+
+    function confirmerModification($twig, $menu, $chemin, $allPostVars, $id)
+    {
+        $array = $this->formatterTableau($allPostVars);
+        $errors = $this->estChampVide($array);
+
+        // S'il y a des erreurs on redirige vers la page d'erreur
+        if (!empty($errors)) {
+            $this->afficherErreurs($twig, $menu, $chemin, $errors);
+        } // sinon on ajoute à la base et on redirige vers une page de succès
+        else {
+            $this->annonce = Annonce::find($id);
+            $idAnnonceur = $this->annonce->id_annonceur;
+            $this->annonceur = Annonceur::find($idAnnonceur);
+
+            $this->annonce = $this->CreerHtmlEntites($array, $this->annonce);
+            $this->annonceur->save();
+            $this->annonceur->annonce()->save($this->annonce);
+
+
+            $template = $twig->load("modif-confirm.html.twig");
+            return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace controller\app\controller;
 use controller\app\model\Annonce;
 use controller\app\model\Photo;
 use controller\app\model\Annonceur;
+use Slim\Psr7\Response;
 
 class index
 {
@@ -16,17 +17,22 @@ class index
         $menu     = array(
             array(
                 'href' => $chemin,
-                'text' => 'Acceuil'
+                'text' => 'Accueil'
             ),
         );
 
         $this->getAll($chemin);
-        echo $template->render(array(
+        $html = $template->render(array(
             "breadcrumb" => $menu,
             "chemin"     => $chemin,
             "categories" => $cat,
             "annonces"   => $this->annonce
         ));
+
+        $response = new Response();
+        $response->getBody()->write($html);
+
+        return $response;
     }
 
     public function getAll($chemin)

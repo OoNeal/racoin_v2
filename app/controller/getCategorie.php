@@ -45,7 +45,7 @@ class getCategorie {
         );
 
         $this->getCategorieContent($chemin, $n);
-        echo $template->render(array(
+        return $template->render(array(
             "breadcrumb" => $menu,
             "chemin" => $chemin,
             "categories" => $cat,

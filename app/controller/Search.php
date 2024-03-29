@@ -15,7 +15,7 @@ class Search {
             array('href' => $chemin."/search",
                 'text' => "Recherche")
         );
-        echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+        return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
     }
 
     function research($array, $twig, $menu, $chemin, $cat) {
@@ -70,7 +70,7 @@ class Search {
             $annonce = $query->get();
         }
 
-        echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "annonces" => $annonce, "categories" => $cat));
+        return $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "annonces" => $annonce, "categories" => $cat));
 
     }
 
