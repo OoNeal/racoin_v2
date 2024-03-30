@@ -18,17 +18,12 @@ use Slim\Factory\AppFactory;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Routing\RouteCollectorProxy;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 return function (App $app): void {
     $objetControlleur = new ObjetControlleur();
     $cat = new getCategorie();
     $dpt = new getDepartment();
     $responseFactory = AppFactory::determineResponseFactory();
-
-    $loader = new FilesystemLoader(__DIR__ . '/../template');
-    $twig = new Environment($loader);
 
     $app->add(function (Request $request, RequestHandlerInterface $handler) use ($responseFactory) {
         $uri = $request->getUri();
