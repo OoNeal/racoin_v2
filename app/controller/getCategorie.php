@@ -8,20 +8,23 @@ use controller\app\model\Photo;
 use controller\app\model\Annonceur;
 use Slim\Psr7\Response;
 
-class getCategorie {
+class getCategorie
+{
 
     protected $categories = array();
 
-    public function getCategories() {
+    public function getCategories()
+    {
         return Categorie::orderBy('nom_categorie')->get()->toArray();
     }
 
-    public function getCategorieContent($chemin, $n) {
-        $tmp = Annonce::with("Annonceur")->orderBy('id_annonce','desc')->where('id_categorie', "=", $n)->get();
+    public function getCategorieContent($chemin, $n)
+    {
+        $tmp = Annonce::with("Annonceur")->orderBy('id_annonce', 'desc')->where('id_categorie', "=", $n)->get();
         $annonce = [];
         foreach($tmp as $t) {
             $t->nb_photo = Photo::where("id_annonce", "=", $t->id_annonce)->count();
-            if($t->nb_photo > 0){
+            if($t->nb_photo > 0) {
                 $t->url_photo = Photo::select("url_photo")
                     ->where("id_annonce", "=", $t->id_annonce)
                     ->first()->url_photo;
@@ -36,7 +39,8 @@ class getCategorie {
         $this->annonce = $annonce;
     }
 
-    public function displayCategorie($twig, $menu, $chemin, $cat, $n) {
+    public function displayCategorie($twig, $menu, $chemin, $cat, $n)
+    {
         $template = $twig->load("index.html.twig");
         $menu = array(
             array('href' => $chemin,
@@ -46,11 +50,13 @@ class getCategorie {
         );
 
         $this->getCategorieContent($chemin, $n);
-        $html = $template->render(array(
+        $html = $template->render(
+            array(
             "breadcrumb" => $menu,
             "chemin" => $chemin,
             "categories" => $cat,
-            "annonces" => $this->annonce));
+            "annonces" => $this->annonce)
+        );
 
         $response = new Response();
         $response->getBody()->write($html);

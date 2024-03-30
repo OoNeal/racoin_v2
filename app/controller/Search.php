@@ -6,9 +6,11 @@ use controller\app\model\Annonce;
 use controller\app\model\Categorie;
 use Slim\Psr7\Response;
 
-class Search {
+class Search
+{
 
-    function show($twig, $menu, $chemin, $cat) {
+    function show($twig, $menu, $chemin, $cat)
+    {
         $template = $twig->load("search.html.twig");
         $menu = array(
             array('href' => $chemin,
@@ -24,7 +26,8 @@ class Search {
         return $response;
     }
 
-    function research($array, $twig, $menu, $chemin, $cat) {
+    function research($array, $twig, $menu, $chemin, $cat)
+    {
         $template = $twig->load("index.html.twig");
         $menu = array(
             array('href' => $chemin,
@@ -39,37 +42,38 @@ class Search {
 
         $query = Annonce::select();
 
-        if( ($nospace_mc === "") &&
-            ($nospace_cp === "") &&
-            (($array['categorie'] === "Toutes catégories" || $array['categorie'] === "-----")) &&
-            ($array['prix-min'] === "Min") &&
-            ( ($array['prix-max'] === "Max") || ($array['prix-max'] === "nolimit") ) ) {
+        if(($nospace_mc === "") 
+            && ($nospace_cp === "") 
+            && (($array['categorie'] === "Toutes catégories" || $array['categorie'] === "-----")) 
+            && ($array['prix-min'] === "Min") 
+            && ( ($array['prix-max'] === "Max") || ($array['prix-max'] === "nolimit") ) 
+        ) {
             $annonce = Annonce::all();
 
         } else {
             // A REFAIRE SEPARER LES TRUCS
-            if( ($nospace_mc !== "") ) {
+            if(($nospace_mc !== "") ) {
                 $query->where('description', 'like', '%'.$array['motclef'].'%');
             }
 
-            if( ($nospace_cp !== "") ) {
+            if(($nospace_cp !== "") ) {
                 $query->where('ville', '=', $array['codepostal']);
             }
 
-            if ( ($array['categorie'] !== "Toutes catégories" && $array['categorie'] !== "-----") ) {
+            if (($array['categorie'] !== "Toutes catégories" && $array['categorie'] !== "-----") ) {
                 $categ = Categorie::select('id_categorie')->where('id_categorie', '=', $array['categorie'])->first()->id_categorie;
                 $query->where('id_categorie', '=', $categ);
             }
 
-            if ( $array['prix-min'] !== "Min" && $array['prix-max'] !== "Max") {
+            if ($array['prix-min'] !== "Min" && $array['prix-max'] !== "Max") {
                 if($array['prix-max'] !== "nolimit") {
                     $query->whereBetween('prix', array($array['prix-min'], $array['prix-max']));
                 } else {
                     $query->where('prix', '>=', $array['prix-min']);
                 }
-            } elseif ( $array['prix-max'] !== "Max" && $array['prix-max'] !== "nolimit") {
+            } elseif ($array['prix-max'] !== "Max" && $array['prix-max'] !== "nolimit") {
                 $query->where('prix', '<=', $array['prix-max']);
-            } elseif ( $array['prix-min'] !== "Min" ) {
+            } elseif ($array['prix-min'] !== "Min" ) {
                 $query->where('prix', '>=', $array['prix-min']);
             }
 

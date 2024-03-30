@@ -55,7 +55,8 @@ use Slim\Psr7\Response;
                 "dep" => $this->departement->nom_departement,
                 "photo" => $this->photo,
                 "categories" => $cat
-            ));
+            )
+        );
 
         $response = new Response();
         $response->getBody()->write($html);
@@ -64,11 +65,11 @@ use Slim\Psr7\Response;
     }
 
     /**
-     * @param $twig
-     * @param $menu
-     * @param $chemin
-     * @param $cat
-     * @param $dpt
+     * @param  $twig
+     * @param  $menu
+     * @param  $chemin
+     * @param  $cat
+     * @param  $dpt
      * @return Response
      */
     function ajouterObjetVue($twig, $menu, $chemin, $cat, $dpt): Response
@@ -80,7 +81,8 @@ use Slim\Psr7\Response;
                 "chemin" => $chemin,
                 "categories" => $cat,
                 "departements" => $dpt
-            ));
+            )
+        );
 
         $response = new Response();
         $response->getBody()->write($html);
@@ -123,7 +125,7 @@ use Slim\Psr7\Response;
     }
 
     /**
-     * @param $array
+     * @param  $array
      * @return array
      */
     private function formatterTableau($array): array
@@ -136,7 +138,7 @@ use Slim\Psr7\Response;
     }
 
     /**
-     * @param $array
+     * @param  $array
      * @return array
      */
     private function estChampVide($array): array
@@ -162,7 +164,7 @@ use Slim\Psr7\Response;
     }
 
     /**
-     * @param string $email
+     * @param  string $email
      * @return false|int
      */
     private function estEmail(string $email): false|int
@@ -171,16 +173,17 @@ use Slim\Psr7\Response;
     }
 
     /**
-     * @param $twig
-     * @param $menu
-     * @param $chemin
-     * @param $errors
+     * @param  $twig
+     * @param  $menu
+     * @param  $chemin
+     * @param  $errors
      * @return void
      */
     private function afficherErreurs($twig, $menu, $chemin, $errors)
     {
         $template = $twig->load("add-error.html.twig");
-        return $template->render(array(
+        return $template->render(
+            array(
                 "breadcrumb" => $menu,
                 "chemin" => $chemin,
                 "errors" => $errors)
@@ -188,8 +191,8 @@ use Slim\Psr7\Response;
     }
 
     /**
-     * @param array $array
-     * @param Annonce $annonce
+     * @param  array   $array
+     * @param  Annonce $annonce
      * @return Annonce
      */
     private function CreerHtmlEntites(array $array, Annonce $annonce): Annonce
@@ -214,9 +217,11 @@ use Slim\Psr7\Response;
             $response->getBody()->write("404");
         }
         $template = $twig->load("delGet.html.twig");
-        $html = $template->render(array("breadcrumb" => $menu,
+        $html = $template->render(
+            array("breadcrumb" => $menu,
             "chemin" => $chemin,
-            "annonce" => $this->annonce));
+            "annonce" => $this->annonce)
+        );
 
         $response = new Response();
         $response->getBody()->write($html);
@@ -242,11 +247,13 @@ use Slim\Psr7\Response;
         }
 
         $template = $twig->load("delPost.html.twig");
-        $html = $template->render(array("breadcrumb" => $menu,
+        $html = $template->render(
+            array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce,
             "pass" => $reponse,
-            "categories" => $cat));
+            "categories" => $cat)
+        );
 
         $response = new Response();
         $response->getBody()->write($html);
@@ -267,9 +274,11 @@ use Slim\Psr7\Response;
             return "404";
         }
         $template = $twig->load("modifyGet.html.twig");
-        $html =  $template->render(array("breadcrumb" => $menu,
+        $html =  $template->render(
+            array("breadcrumb" => $menu,
             "chemin" => $chemin,
-            "annonce" => $this->annonce));
+            "annonce" => $this->annonce)
+        );
 
         $response = new Response();
         $response->getBody()->write($html);
@@ -299,7 +308,8 @@ use Slim\Psr7\Response;
         }
 
         $template = $twig->load("modifyPost.html.twig");
-        $html = $template->render(array("breadcrumb" => $menu,
+        $html = $template->render(
+            array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce,
             "annonceur" => $this->annonceur,
@@ -307,7 +317,8 @@ use Slim\Psr7\Response;
             "categories" => $cat,
             "departements" => $dpt,
             "dptItem" => $this->dptItem,
-            "categItem" => $this->categItem));
+            "categItem" => $this->categItem)
+        );
 
         $response = new Response();
         $response->getBody()->write($html);

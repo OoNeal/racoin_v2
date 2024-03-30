@@ -22,12 +22,14 @@ class index
         );
 
         $this->getAll($chemin);
-        $html = $template->render(array(
+        $html = $template->render(
+            array(
             "breadcrumb" => $menu,
             "chemin"     => $chemin,
             "categories" => $cat,
             "annonces"   => $this->annonce
-        ));
+            )
+        );
 
         $response = new Response();
         $response->getBody()->write($html);

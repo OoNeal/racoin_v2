@@ -2,7 +2,8 @@
 
 namespace controller\app\model;
 
-class Annonce extends \Illuminate\Database\Eloquent\Model {
+class Annonce extends \Illuminate\Database\Eloquent\Model
+{
     protected $table = 'annonce';
     protected $primaryKey = 'id_annonce';
     public $timestamps = false;

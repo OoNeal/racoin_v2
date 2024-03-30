@@ -5,9 +5,11 @@ namespace controller\app\controller;
 use controller\app\model\ApiKey;
 use Slim\Psr7\Response;
 
-class KeyGenerator {
+class KeyGenerator
+{
 
-    function show($twig, $menu, $chemin, $cat) {
+    function show($twig, $menu, $chemin, $cat)
+    {
         $template = $twig->load("key-generator.html.twig");
         $menu = array(
             array('href' => $chemin,
@@ -23,7 +25,8 @@ class KeyGenerator {
         return $response;
     }
 
-    function generateKey($twig, $menu, $chemin, $cat, $nom) {
+    function generateKey($twig, $menu, $chemin, $cat, $nom)
+    {
         $nospace_nom = str_replace(' ', '', $nom);
 
         if($nospace_nom === '') {
