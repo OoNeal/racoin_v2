@@ -9,8 +9,8 @@ use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
-$parametres = include_once __DIR__ . '/parametres.php';
-$routes_dependances = include_once __DIR__ . '/routes_dependances.php';
+$parametres = include_once __DIR__ . '/settings.php';
+$routes_dependances = include_once __DIR__ . '/actions_dependencies.php';
 
 connection::createConn();
 

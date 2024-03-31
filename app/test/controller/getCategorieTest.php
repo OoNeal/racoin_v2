@@ -2,7 +2,7 @@
 
 namespace controller\app\test\controller;
 
-use controller\app\controller\getCategorie;
+use controller\app\actions\get\CategoryAction;
 use controller\app\db\connection;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ class getCategorieTest extends TestCase
 
     public function testGetCategories()
     {
-        $getCategorie = new getCategorie();
+        $getCategorie = new CategoryAction();
         $categories = $getCategorie->getCategories();
         $this->assertIsArray($categories);
         $this->assertNotEmpty($categories);

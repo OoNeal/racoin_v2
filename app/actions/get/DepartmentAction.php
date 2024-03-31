@@ -1,15 +1,15 @@
 <?php
 
-namespace controller\app\controller;
+namespace controller\app\actions\get;
 
 use controller\app\model\Departement;
 
-class getDepartment
+class DepartmentAction
 {
 
     protected $departments = array();
 
-    public function getAllDepartments()
+    public function getDepartments()
     {
         return Departement::orderBy('nom_departement')->get()->toArray();
     }
