@@ -2,6 +2,11 @@
 
 Racoin est une application de vente en ligne entre particulier.
 
+## Remarques
+
+Au vu du temps imparti et de la longueur des tâches, les models sont restés en français, pour des raisons de lisibilité avec la base de données
+L'utilisation de service a été mis en place sur les méthodes utilisées de manière répétée, pour éviter la duplication de code
+
 ## Installation
 Les commandes suivantes permettent d'installer les dépendances et de construire les fichiers statiques nécessaires au bon fonctionnement de l'application.
 ```bash
