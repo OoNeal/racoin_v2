@@ -88,25 +88,33 @@ return function (App $app): void {
     $app->group(
         '/api', function (RouteCollectorProxy $group) {
 
-        $group->group('/annonce', function (RouteCollectorProxy $group) {
-            $group->get('/{id}', ApiAnnonceAction::class);
-        });
+            $group->group(
+                '/annonce', function (RouteCollectorProxy $group) {
+                    $group->get('/{id}', ApiAnnonceAction::class);
+                }
+            );
 
-        $group->group('/annonces', function (RouteCollectorProxy $group) {
-            $group->get('', ApiAnnoncesAction::class);
-        });
+            $group->group(
+                '/annonces', function (RouteCollectorProxy $group) {
+                    $group->get('', ApiAnnoncesAction::class);
+                }
+            );
 
-        $group->group(
-            '/categorie', function (RouteCollectorProxy $group) {
-            $group->get('/{id}', ApiCategoryAction::class);
-        });
+            $group->group(
+                '/categorie', function (RouteCollectorProxy $group) {
+                    $group->get('/{id}', ApiCategoryAction::class);
+                }
+            );
 
-        $group->group('/categories', function (RouteCollectorProxy $group) {
-            $group->get('', ApiCategoriesAction::class);
-        });
+            $group->group(
+                '/categories', function (RouteCollectorProxy $group) {
+                    $group->get('', ApiCategoriesAction::class);
+                }
+            );
 
-        $group->get('/key', KeyGeneratorActionGet::class);
+            $group->get('/key', KeyGeneratorActionGet::class);
 
-        $group->post('/key', KeyGeneratorActionPost::class);
-    });
+            $group->post('/key', KeyGeneratorActionPost::class);
+        }
+    );
 };

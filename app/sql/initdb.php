@@ -16,12 +16,12 @@ function executeScript($mysqli, $filename): void
 {
     $sql = file_get_contents($filename);
     $mysqli->multi_query($sql);
-    while(mysqli_more_results($mysqli))
-    {
+    while (mysqli_more_results($mysqli)) {
         mysqli_next_result($mysqli);
     }
 
 }
+
 executeScript($mysqli, __DIR__ . '/create_schema.sql');
 executeScript($mysqli, __DIR__ . '/import_data.sql');
 

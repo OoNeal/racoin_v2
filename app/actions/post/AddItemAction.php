@@ -22,9 +22,9 @@ class AddItemAction extends AbstractAction
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
@@ -38,7 +38,8 @@ class AddItemAction extends AbstractAction
 
         // S'il y a des erreurs on redirige vers la page d'erreur
         if (!empty($errors)) {
-            return $twig->render($response, "add_error.html.twig",
+            return $twig->render(
+                $response, "add_error.html.twig",
                 array(
                     "breadcrumb" => $this->menu,
                     "chemin" => $this->path,
@@ -53,7 +54,8 @@ class AddItemAction extends AbstractAction
         $this->itemService->CreerHtmlEntites($array, $annonce);
         $annonceur->save();
         $annonceur->annonce()->save($annonce);
-        return $twig->render($response, "add_confirm.html.twig",
+        return $twig->render(
+            $response, "add_confirm.html.twig",
             array(
                 "breadcrumb" => $this->menu,
                 "chemin" => $this->path)

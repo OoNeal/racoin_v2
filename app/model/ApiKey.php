@@ -2,11 +2,14 @@
 
 namespace controller\app\model;
 
-class ApiKey extends \Illuminate\Database\Eloquent\Model
+use Illuminate\Database\Eloquent\Model;
+
+class ApiKey extends Model
 {
+    public $timestamps = false;
     protected $table = 'apikey';
     protected $primaryKey = 'id_key';
-    public $timestamps = false;
 
 }
+
 ?>

@@ -23,19 +23,20 @@ class AddItemAction extends AbstractAction
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(Request $request, Response $response, array $args): \Psr\Http\Message\ResponseInterface
+    public function __invoke(Request $request, Response $response, array $args): ResponseInterface
     {
         $twig = Twig::fromRequest($request);
 
-        return $twig->render($response, "add.html.twig",
+        return $twig->render(
+            $response, "add.html.twig",
             array(
                 "breadcrumb" => $this->menu,
                 "chemin" => $this->path,

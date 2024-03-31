@@ -31,12 +31,14 @@ class AdsAction extends AbstractAction
     {
         $twig = Twig::fromRequest($request);
 
-        return $twig->render($response, "ads.html.twig", [
+        return $twig->render(
+            $response, "ads.html.twig", [
             "breadcrumb" => $this->menu,
             "chemin" => $this->path,
             "categories" => $this->categoryService->getCategories(),
             "annonces" => $this->getAll()
-        ]);
+            ]
+        );
     }
 
     private function getAll(): array
@@ -45,12 +47,14 @@ class AdsAction extends AbstractAction
             ->orderBy('id_annonce', 'desc')
             ->take(12)
             ->get();
-        return $annonce->map(function ($annonce) {
-            $photo = Photo::where('id_annonce', '=', $annonce->id_annonce)->get();
-            $annonce->nb_photo = $photo->count();
-            $annonce->url_photo = $photo->first() ? $photo->first()->url_photo : '/img/noimg.png';
-            $annonce->nom_annonceur = $annonce->annonceur->nom_annonceur;
-            return $annonce;
-        })->toArray();
+        return $annonce->map(
+            function ($annonce) {
+                $photo = Photo::where('id_annonce', '=', $annonce->id_annonce)->get();
+                $annonce->nb_photo = $photo->count();
+                $annonce->url_photo = $photo->first() ? $photo->first()->url_photo : '/img/noimg.png';
+                $annonce->nom_annonceur = $annonce->annonceur->nom_annonceur;
+                return $annonce;
+            }
+        )->toArray();
     }
 }

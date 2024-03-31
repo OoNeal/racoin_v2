@@ -2,11 +2,13 @@
 
 namespace controller\app\model;
 
-class Annonceur extends \Illuminate\Database\Eloquent\Model
+use Illuminate\Database\Eloquent\Model;
+
+class Annonceur extends Model
 {
+    public $timestamps = false;
     protected $table = 'annonceur';
     protected $primaryKey = 'id_annonceur';
-    public $timestamps = false;
 
     public function annonce()
     {

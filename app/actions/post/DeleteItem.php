@@ -29,7 +29,8 @@ class DeleteItem extends AbstractAction
             $annonce->delete();
         }
 
-        return $twig->render($response, "delete_item_post.html.twig",
+        return $twig->render(
+            $response, "delete_item_post.html.twig",
             array("breadcrumb" => $this->menu,
                 "chemin" => $this->path,
                 "annonce" => $annonce,

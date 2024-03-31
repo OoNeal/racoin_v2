@@ -15,13 +15,16 @@ class SearchAction extends AbstractAction
     {
         parent::__construct($container);
     }
+
     public function __invoke(Request $request, Response $response, array $args)
     {
         $twig = Twig::fromRequest($request);
-        return $twig->render($response, "search.html.twig", [
+        return $twig->render(
+            $response, "search.html.twig", [
             "breadcrumb" => $this->menu,
             "chemin" => $this->path,
             "categories" => $this->categoryService->getCategories()
-        ]);
+            ]
+        );
     }
 }

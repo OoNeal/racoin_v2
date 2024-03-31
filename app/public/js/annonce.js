@@ -10,12 +10,12 @@ $(".min_img").click(
 
 $("#main-img").click(
     function () {
-        $("#zoomImg").css({"visibility":"visible"});
+        $("#zoomImg").css({"visibility": "visible"});
     }
 );
 
 $("#zoomClose").click(
     function () {
-        $("#zoomImg").css({"visibility":"hidden"});
+        $("#zoomImg").css({"visibility": "hidden"});
     }
 );

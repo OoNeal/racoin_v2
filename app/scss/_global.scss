@@ -1,39 +1,46 @@
 * {
   box-sizing: border-box;
-  &:focus{
+
+  &:focus {
     outline: 0;
   }
 }
 
 
-.header{
+.header {
   position: relative;
-  a{
+
+  a {
     display: inline-block;
     vertical-align: top;
-    &.account{
+
+    &.account {
       position: absolute;
       right: 1rem;
       color: #000000;
-      &:hover{
+
+      &:hover {
         color: gold;
         border-bottom: 1px dotted gray;
       }
     }
   }
-  #rc-title, #rc-img{
+
+  #rc-title, #rc-img {
     display: block;
   }
-  img#rc-img{
+
+  img#rc-img {
     width: 60px;
     height: 60px;
     margin: auto;
   }
 }
 
-img.svg-mobile{
+img.svg-mobile {
   width: 1.25em;
-  &:hover{
+
+  &:hover {
     cursor: pointer;
     color: red;
   }
@@ -44,22 +51,25 @@ img.svg-mobile{
   margin-right: auto;
   max-width: 960px;
   padding: 0.5rem;
-  .categ-title{
+
+  .categ-title {
     margin: 1rem 0;
-    h4{
+
+    h4 {
       font-weight: bold;
     }
   }
 }
 
 // Footer
-.footer{
+.footer {
   height: 2rem;
   line-height: 2rem;
   color: #ffffff;
   background-color: #000000;
   bottom: 0;
-  p{
+
+  p {
     font-size: 0.750rem;
     margin: 0;
     color: gold;
@@ -67,45 +77,52 @@ img.svg-mobile{
 }
 
 
-
-ul#list-action{
+ul#list-action {
   display: block;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  li{
+
+  li {
     list-style: none;
   }
-  a{
+
+  a {
     padding: 0.38889rem 0.77778rem;
     display: inherit;
     color: #414141;
-    &:hover{
+
+    &:hover {
       background-color: black;
       color: gold;
     }
   }
 }
 
-ul#list-categ{
+ul#list-categ {
   background-color: whitesmoke;
   padding: 0.5rem;
-  li{
+
+  li {
     display: inline;
     list-style: none;
     margin: 0;
     padding: 0;
-    &:after{
+
+    &:after {
       content: " | ";
     }
-    &:last-child:after{
+
+    &:last-child:after {
       content: "";
     }
-    a{
+
+    a {
       text-decoration: none;
       color: #414141;
       padding: 5px;
       border-radius: 3px;
-      &:hover{
+
+      &:hover {
         color: gold;
         background-color: black;
       }
@@ -113,69 +130,80 @@ ul#list-categ{
   }
 }
 
-.hr-ratcoin{
+.hr-ratcoin {
   max-width: 50%;
 }
 
-article.item{
+article.item {
   margin-bottom: 15px;
   border: 1px solid #e8e8e8;
   padding: 0 0.500rem 0.4rem;
   border-radius: 3px;
-  a{
+
+  a {
     display: block;
     text-decoration: none;
     color: #333333;
-    p em{
+
+    p em {
       font-size: .750rem;
     }
-    h5{
+
+    h5 {
       color: #1254a3;
       font-weight: bold;
       margin-bottom: 0.313rem;
     }
-    .item-img, .item-infos{
+
+    .item-img, .item-infos {
       display: inline-block;
       vertical-align: top;
     }
-    .item-img{
-      @media only screen and (min-width: $tablet){
+
+    .item-img {
+      @media only screen and (min-width: $tablet) {
         width: 100%;
         text-align: center;
       }
-      img{
+
+      img {
         margin: auto;
         width: 125px;
         height: 125px;
       }
-      p{
+
+      p {
         margin: 0;
         font-style: italic;
       }
     }
-    .item-infos{
+
+    .item-infos {
       width: 52%;
       @media only screen and (min-width: $tablet) {
         width: 100%;
       }
       padding-left: 5px;
-      p{
-        margin:0;
+
+      p {
+        margin: 0;
         font-size: 0.875rem;
-        span.price{
+
+        span.price {
           color: darkred;
           font-weight: bold;
         }
       }
     }
   }
-  &:hover{
+
+  &:hover {
     background-color: whitesmoke;
   }
 }
 
 // item description
-%p{
+%p {
   display: block;
   @extend .uppercase;
   color: #ffffff;
@@ -183,111 +211,133 @@ article.item{
   margin: 0;
 }
 
-.wrapper-item{
+.wrapper-item {
   margin-top: 1.5rem;
   max-width: 960px;
-  @media only screen and (min-width: $tablet){
-    .item-container, .table-contact{
+  @media only screen and (min-width: $tablet) {
+    .item-container, .table-contact {
       //display: inline-block;
       float: left;
       vertical-align: top;
     }
   }
-  .title-item{
+
+  .title-item {
     padding: 1rem;
   }
-  .ilovetowrap{
-     //rajoute
+
+  .ilovetowrap {
+    //rajoute
     width: 100%;
     height: 100%;
     clear: both;
-    .item-container{
-      @media only screen and (min-width: $tablet){
+
+    .item-container {
+      @media only screen and (min-width: $tablet) {
         width: 60%;
       }
       border: 1px solid #e8e8e8;
-      .img-container img{
+
+      .img-container img {
         width: 460px;
         height: 345px;
       }
-      .item-min{
-        a.current img{
+
+      .item-min {
+        a.current img {
           border: 1px solid black;
         }
-        img{
+
+        img {
           width: 45px;
           height: 45px;
           border: 1px solid lightgray;
-          &:hover{
+
+          &:hover {
             opacity: 0.5;
             cursor: pointer;
           }
         }
       }
     }
-    .table-contact{
-      
+
+    .table-contact {
+
       width: 100%;
-      @media only screen and (min-width: $tablet){
+      @media only screen and (min-width: $tablet) {
         margin: 0 auto auto 1rem;
         width: 35%;
       }
-      .hg-table-container, .contact{
+
+      .hg-table-container, .contact {
         display: inline-block;
         vertical-align: top;
-        @media only screen and (min-width: $tablet){
+        @media only screen and (min-width: $tablet) {
           display: block;
           width: auto !important;
           margin: 0;
         }
       }
-      .hg-table-container{
+
+      .hg-table-container {
         width: 58%;
         margin-right: 2%;
-        table.hg-table tbody tr td:first-child{
+
+        table.hg-table tbody tr td:first-child {
           font-weight: bold;
         }
-        td.price{
+
+        td.price {
           color: darkred;
           font-weight: bold;
         }
       }
-      .contact{
+
+      .contact {
         height: 100%;
         width: 37%;
-        .tocontact{
+
+        .tocontact {
           margin-top: 10px;
           background-color: orangered;
           border-radius: 3px;
-          p{
+
+          p {
             @extend %p;
           }
         }
-        a{
+
+        a {
           display: block;
           margin-top: 8px;
-          img{
+
+          img {
             width: 64px;
             height: 40px;
-            &:hover{
+
+            &:hover {
               background-color: orangered;
             }
           }
         }
       }
-      .modify{
-        .tomodify{
+
+      .modify {
+        .tomodify {
           background-color: orangered;
           border-radius: 3px;
-          p{
+
+          p {
             @extend %p;
           }
         }
-        a{
+
+        a {
           display: inline-block;
           padding: 0 20px;
           margin-top: 8px;
-          img:hover{
+
+          img:hover {
             background-color: orangered;
           }
         }
@@ -296,94 +346,111 @@ article.item{
   }
 }
 
-.description{
+.description {
   @extend .justify;
   @media only screen and (min-width: $tablet) {
     margin-top: 2rem !important;
   }
-  h3{
+
+  h3 {
     font-weight: bold;
   }
-  table.carac tbody{
-    tr td:first-child{
+
+  table.carac tbody {
+    tr td:first-child {
       color: #262626;
       font-weight: bold;
     }
-    tr td:nth-child(2n){
+
+    tr td:nth-child(2n) {
       color: black;
     }
   }
 }
 
-.manage{
+.manage {
   background-color: orangered;
   height: 2rem;
   line-height: 2rem;
-  a{
+
+  a {
     color: #ffffff;
     @extend .uppercase;
     font-weight: bold;
-    &:hover{
+
+    &:hover {
       color: orangered;
     }
   }
-  &:hover{
+
+  &:hover {
     background-color: black;
   }
 }
 
 // recherche
-div.formulaire{
-  margin-top:1rem;
-  @media only screen and (min-width: $tablet){
+div.formulaire {
+  margin-top: 1rem;
+  @media only screen and (min-width: $tablet) {
     max-width: 768px;
     margin: auto;
   }
-  form{
-    margin:0 auto;
-    input, select{
+
+  form {
+    margin: 0 auto;
+
+    input, select {
       width: 100%;
       margin: 0.50rem auto;
-      padding:6px 15px 6px 30px;
+      padding: 6px 15px 6px 30px;
     }
+
     input.search {
       background: url('../img/search.png') no-repeat 8px;
     }
-    input[type=text]{
+
+    input[type=text] {
       color: orangered;
       border-radius: 15px;
       border: 1px solid #a3a3a3;
-      &:focus{
+
+      &:focus {
         border: 1px solid orangered;
       }
+
       input[type=button], input[type=button]:hover {
-        position:relative;
-        border:1px solid #adc5cf;
+        position: relative;
+        border: 1px solid #adc5cf;
         background-color: #e4f1f9;
         color: black;
         cursor: pointer;
       }
     }
   }
-  #validate{
+
+  #validate {
     margin-top: 20px;
   }
-  input[type=submit]{
+
+  input[type=submit] {
     width: 100%;
     padding: 0.4rem 0.7rem;
     border-radius: 15px;
     border: 1px solid orangered;
     background: none;
     text-decoration: none;
-    &:hover{
+
+    &:hover {
       color: #ffffff;
       background-color: orangered;
     }
-    @media only screen and (min-width: $tablet){
+
+    @media only screen and (min-width: $tablet) {
       width: 30%;
     }
   }
-  .form-item{
+
+  .form-item {
     margin: auto;
     @extend .align-center;
   }
@@ -396,47 +463,57 @@ div.add-item {
     max-width: 768px;
     margin: auto;
   }
+
   form {
     margin: 0 auto;
-    fieldset#coordonnee{
-      input{
+
+    fieldset#coordonnee {
+      input {
         display: block;
       }
     }
+
     input, select, textarea {
       width: 100%;
       margin: 0.50rem auto;
-      padding:6px 15px 6px 30px;
+      padding: 6px 15px 6px 30px;
     }
-    input[type=text], input[type=email], input[type=password], textarea{
+
+    input[type=text], input[type=email], input[type=password], textarea {
       color: orangered;
       border-radius: 15px;
       border: 1px solid #a3a3a3;
-      &:focus{
+
+      &:focus {
         border: 1px solid orangered;
       }
+
       input[type=button], input[type=button]:hover {
-        position:relative;
-        border:1px solid #adc5cf;
+        position: relative;
+        border: 1px solid #adc5cf;
         background-color: #e4f1f9;
         color: black;
         cursor: pointer;
       }
     }
-    input[type=radio], label{
+
+    input[type=radio], label {
       display: inline;
       width: 30px;
     }
-    textarea{
+
+    textarea {
     }
-    input[type=submit]{
+
+    input[type=submit] {
       width: 100%;
       padding: 0.4rem 0.7rem;
       border-radius: 15px;
       border: 1px solid orangered;
       background: none;
       text-decoration: none;
-      &:hover{
+
+      &:hover {
         color: #ffffff;
         background-color: orangered;
       }

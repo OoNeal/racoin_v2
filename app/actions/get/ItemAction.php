@@ -29,9 +29,9 @@ class ItemAction extends AbstractAction
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
@@ -57,7 +57,8 @@ class ItemAction extends AbstractAction
                 'text' => $annonce->titre)
         );
 
-        return $twig->render($response, "item.html.twig", [
+        return $twig->render(
+            $response, "item.html.twig", [
             "breadcrumb" => $menu,
             "chemin" => $this->path,
             "annonce" => $annonce,
@@ -65,7 +66,8 @@ class ItemAction extends AbstractAction
             "dep" => $departement->nom_departement,
             "photo" => $photo,
             "categories" => $this->path
-        ]);
+            ]
+        );
 
     }
 }

@@ -24,9 +24,9 @@ class ModifyItemAction extends AbstractAction
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
@@ -42,7 +42,8 @@ class ModifyItemAction extends AbstractAction
             return $response->withStatus(404);
         }
 
-        return $twig->render($response, "edit_item_get.html.twig",
+        return $twig->render(
+            $response, "edit_item_get.html.twig",
             array("breadcrumb" => $this->menu,
                 "chemin" => $this->path,
                 "annonce" => $annonce)

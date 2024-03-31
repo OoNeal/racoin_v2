@@ -16,12 +16,12 @@ class ApiAnnonceAction extends AbstractAction
 {
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
      * @return Response|Message
      */
-    public function __invoke(Request $request, Response $response, array $args): Response|\Slim\Psr7\Message
+    public function __invoke(Request $request, Response $response, array $args): Response|Message
     {
         $id = $args['id'];
         $annonceList = ['id_annonce', 'id_categorie as categorie', 'id_annonceur as annonceur', 'id_departement as departement', 'prix', 'date', 'titre', 'description', 'ville'];

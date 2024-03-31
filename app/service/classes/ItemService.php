@@ -7,7 +7,7 @@ use controller\app\service\interfaces\ItemInterface;
 class ItemService implements ItemInterface
 {
     /**
-     * @param  array $array
+     * @param array $array
      * @return array
      */
     public function formatArray(array $array): array
@@ -16,7 +16,7 @@ class ItemService implements ItemInterface
     }
 
     /**
-     * @param  array $array
+     * @param array $array
      * @return array
      */
     public function isEmptyField(array $array): array
@@ -37,11 +37,11 @@ class ItemService implements ItemInterface
     }
 
     /**
-     * @param  string $email
+     * @param string $email
      * @return bool
      */
     public function isValidEmail(string $email): bool
     {
-        return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
+        return (bool)filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 }

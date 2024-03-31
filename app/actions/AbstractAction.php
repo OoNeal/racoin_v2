@@ -3,11 +3,8 @@
 namespace controller\app\actions;
 
 use controller\app\actions\get\DepartmentAction;
-use controller\app\model\Categorie;
-use controller\app\service\classes\AdService;
 use controller\app\service\classes\CategoryService;
 use controller\app\service\classes\ItemService;
-use controller\app\service\classes\PhotoService;
 use Psr\Container\ContainerInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -21,10 +18,6 @@ abstract class AbstractAction
     protected DepartmentAction $departmentService;
 
     protected ItemService $itemService;
-
-    protected PhotoService $photoService;
-
-    protected AdService $adService;
 
     public function __construct(ContainerInterface $container)
     {

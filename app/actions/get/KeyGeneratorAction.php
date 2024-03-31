@@ -21,9 +21,9 @@ class KeyGeneratorAction extends AbstractAction
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
@@ -35,10 +35,11 @@ class KeyGeneratorAction extends AbstractAction
         $menu = array(
             array('href' => $this->path,
                 'text' => 'Acceuil'),
-            array('href' => $this->path."/search",
+            array('href' => $this->path . "/search",
                 'text' => "Recherche")
         );
-        return $twig->render($response, "key_generator.html.twig",
+        return $twig->render(
+            $response, "key_generator.html.twig",
             array(
                 "breadcrumb" => $menu,
                 "chemin" => $this->path,

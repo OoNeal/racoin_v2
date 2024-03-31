@@ -28,9 +28,9 @@ class ModifyItemAction extends AbstractAction
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
@@ -44,7 +44,8 @@ class ModifyItemAction extends AbstractAction
         $dptItem = Departement::find($annonce->id_departement)->nom_departement;
         $twig = Twig::fromRequest($request);
 
-        return $twig->render($response, "edit_item_post.html.twig",
+        return $twig->render(
+            $response, "edit_item_post.html.twig",
             array("breadcrumb" => $this->menu,
                 "chemin" => $this->path,
                 "annonce" => $annonce,

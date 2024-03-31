@@ -1,36 +1,42 @@
-.hg-table-container{
+.hg-table-container {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
-table.hg-table{
+
+table.hg-table {
   border-collapse: collapse;
   border: none;
   border-spacing: 0;
   width: 100%;
   margin-bottom: 1.1rem;
   //white-space: nowrap;
-  thead{
+  thead {
     background: none;
-    th{
+
+    th {
       vertical-align: bottom;
     }
   }
-  td, th{
+
+  td, th {
     padding: 0.338rem;
-    @media only screen and (min-width: $tablet){
+    @media only screen and (min-width: $tablet) {
       padding: 0.750rem;
     }
     border-bottom: 1px solid #e5e5e5;
     text-align: left;
   }
-  td{
+
+  td {
     vertical-align: top;
   }
-  tbody tr td{
+
+  tbody tr td {
     font-size: 0.813rem;
-    code{
+
+    code {
       font-size: 0.750rem;
-      font-family: Consolas,monospace,serif;
+      font-family: Consolas, monospace, serif;
       color: #d05;
       white-space: nowrap;
       padding: 0 4px;

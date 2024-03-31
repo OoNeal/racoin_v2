@@ -19,9 +19,9 @@ class ConfirmItemAction extends AbstractAction
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
+     * @param  Request  $request
+     * @param  Response $response
+     * @param  array    $args
      * @return ResponseInterface
      */
     public function __invoke(Request $request, Response $response, array $args): ResponseInterface
@@ -32,7 +32,8 @@ class ConfirmItemAction extends AbstractAction
 
         // S'il y a des erreurs on redirige vers la page d'erreur
         if (!empty($errors)) {
-            return $twig->render($response, "add_error.html.twig",
+            return $twig->render(
+                $response, "add_error.html.twig",
                 array(
                     "breadcrumb" => $this->menu,
                     "chemin" => $this->path,
@@ -48,7 +49,8 @@ class ConfirmItemAction extends AbstractAction
         $annonce = $this->itemService->CreerHtmlEntites($array, $annonce);
         $annonceur->save();
         $annonceur->annonce()->save($annonce);
-        return $twig->render($response, "edit_item_confirm.html.twig",
+        return $twig->render(
+            $response, "edit_item_confirm.html.twig",
             array(
                 "breadcrumb" => $this->menu,
                 "chemin" => $this->path)

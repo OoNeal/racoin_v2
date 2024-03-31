@@ -22,23 +22,24 @@ class SearchAction extends AbstractAction
         $array = $request->getParsedBody();
         $menu = array(
             $this->menu,
-            array('href' => $this->path."/search",
+            array('href' => $this->path . "/search",
                 'text' => "Résultats de la recherche")
         );
 
         $query = Annonce::select();
 
-        if(empty($array['motclef']) && empty($array['codepostal']) &&
-           ($array['categorie'] === "Toutes catégories" || $array['categorie'] === "-----") &&
-           ($array['prix-min'] === "Min") &&
-           ($array['prix-max'] === "Max" || $array['prix-max'] === "nolimit")) {
+        if (empty($array['motclef']) && empty($array['codepostal']) 
+            && ($array['categorie'] === "Toutes catégories" || $array['categorie'] === "-----") 
+            && ($array['prix-min'] === "Min") 
+            && ($array['prix-max'] === "Max" || $array['prix-max'] === "nolimit")
+        ) {
             $annonce = Annonce::all();
         } else {
-            if(!empty($array['motclef'])) {
-                $query->where('description', 'like', '%'.$array['motclef'].'%');
+            if (!empty($array['motclef'])) {
+                $query->where('description', 'like', '%' . $array['motclef'] . '%');
             }
 
-            if(!empty($array['codepostal'])) {
+            if (!empty($array['codepostal'])) {
                 $query->where('ville', '=', $array['codepostal']);
             }
 
@@ -47,25 +48,27 @@ class SearchAction extends AbstractAction
             }
 
             if ($array['prix-min'] !== "Min" && $array['prix-max'] !== "Max") {
-                if($array['prix-max'] !== "nolimit") {
+                if ($array['prix-max'] !== "nolimit") {
                     $query->whereBetween('prix', array($array['prix-min'], $array['prix-max']));
                 } else {
                     $query->where('prix', '>=', $array['prix-min']);
                 }
             } elseif ($array['prix-max'] !== "Max" && $array['prix-max'] !== "nolimit") {
                 $query->where('prix', '<=', $array['prix-max']);
-            } elseif ($array['prix-min'] !== "Min" ) {
+            } elseif ($array['prix-min'] !== "Min") {
                 $query->where('prix', '>=', $array['prix-min']);
             }
 
             $annonce = $query->get();
         }
 
-        return $twig->render($response, "ads.html.twig", [
+        return $twig->render(
+            $response, "ads.html.twig", [
             "breadcrumb" => $menu,
             "chemin" => $this->path,
             "categories" => $this->categoryService->getCategories(),
             "annonces" => $annonce
-        ]);
+            ]
+        );
     }
 }

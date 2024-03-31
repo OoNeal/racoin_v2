@@ -28,7 +28,8 @@ class ApiHomeAction extends AbstractAction
             )
         );
 
-        return $twig->render($response, 'api.html.twig',
+        return $twig->render(
+            $response, 'api.html.twig',
             array(
                 'breadcrumb' => $menu,
                 'chemin' => $this->path
