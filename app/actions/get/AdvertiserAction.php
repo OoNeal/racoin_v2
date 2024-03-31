@@ -33,7 +33,7 @@ class AdvertiserAction extends AbstractAction
 
     $annonces = $this->getAnnonces($args['id']);
 
-    return $twig->render($response, "annonceur.html.twig",
+    return $twig->render($response, "advertiser.html.twig",
         array('nom' => $annonceur,
             "chemin" => $this->path,
             "annonces" => $annonces,

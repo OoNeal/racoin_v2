@@ -52,7 +52,7 @@ class CategoryAction extends AbstractAction
         );
 
         $annonce = $this->getCategorieContent($this->path, $args['id']);
-        return $twig->render($response, "index.html.twig",
+        return $twig->render($response, "ads.html.twig",
             array(
                 "breadcrumb" => $menu,
                 "chemin" => $this->path,

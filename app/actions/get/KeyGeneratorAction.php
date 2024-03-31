@@ -38,7 +38,7 @@ class KeyGeneratorAction extends AbstractAction
             array('href' => $this->path."/search",
                 'text' => "Recherche")
         );
-        return $twig->render($response, "key-generator.html.twig",
+        return $twig->render($response, "key_generator.html.twig",
             array(
                 "breadcrumb" => $menu,
                 "chemin" => $this->path,

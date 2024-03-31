@@ -48,7 +48,7 @@ class KeyGeneratorAction extends AbstractAction
         );
 
         if ($nospace_nom === '') {
-            return $twig->render($response, "key-generator.html.twig",
+            return $twig->render($response, "key_generator.html.twig",
                 array(
                     "breadcrumb" => $menu,
                     "chemin" => $this->path,
@@ -65,7 +65,7 @@ class KeyGeneratorAction extends AbstractAction
             $apikey->name_key = htmlentities($nom);
             $apikey->save();
 
-            return $twig->render($response, "key-generator-result.html.twig",
+            return $twig->render($response, "key_generator-result.html.twig",
                 array(
                     "breadcrumb" => $menu,
                     "chemin" => $this->path,

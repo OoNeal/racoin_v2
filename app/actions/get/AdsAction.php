@@ -31,7 +31,7 @@ class AdsAction extends AbstractAction
     {
         $twig = Twig::fromRequest($request);
 
-        return $twig->render($response, "index.html.twig", [
+        return $twig->render($response, "ads.html.twig", [
             "breadcrumb" => $this->menu,
             "chemin" => $this->path,
             "categories" => $this->categoryService->getCategories(),

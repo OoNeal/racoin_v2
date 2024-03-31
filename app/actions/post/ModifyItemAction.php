@@ -44,7 +44,7 @@ class ModifyItemAction extends AbstractAction
         $dptItem = Departement::find($annonce->id_departement)->nom_departement;
         $twig = Twig::fromRequest($request);
 
-        return $twig->render($response, "modifyPost.html.twig",
+        return $twig->render($response, "edit_item_post.html.twig",
             array("breadcrumb" => $this->menu,
                 "chemin" => $this->path,
                 "annonce" => $annonce,

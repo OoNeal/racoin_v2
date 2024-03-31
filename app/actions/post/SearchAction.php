@@ -61,7 +61,7 @@ class SearchAction extends AbstractAction
             $annonce = $query->get();
         }
 
-        return $twig->render($response, "index.html.twig", [
+        return $twig->render($response, "ads.html.twig", [
             "breadcrumb" => $menu,
             "chemin" => $this->path,
             "categories" => $this->categoryService->getCategories(),

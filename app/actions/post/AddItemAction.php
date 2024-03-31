@@ -38,7 +38,7 @@ class AddItemAction extends AbstractAction
 
         // S'il y a des erreurs on redirige vers la page d'erreur
         if (!empty($errors)) {
-            return $twig->render($response, "add-error.html.twig",
+            return $twig->render($response, "add_error.html.twig",
                 array(
                     "breadcrumb" => $this->menu,
                     "chemin" => $this->path,
@@ -53,7 +53,7 @@ class AddItemAction extends AbstractAction
         $this->objectService->CreerHtmlEntites($array, $annonce);
         $annonceur->save();
         $annonceur->annonce()->save($annonce);
-        return $twig->render($response, "add-confirm.html.twig",
+        return $twig->render($response, "add_confirm.html.twig",
             array(
                 "breadcrumb" => $this->menu,
                 "chemin" => $this->path)
