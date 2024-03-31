@@ -2,9 +2,8 @@
 
 
 use controller\app\actions\get\DepartmentAction;
-use controller\app\actions\ObjetControlleur;
-use controller\app\model\Categorie;
 use controller\app\service\classes\CategoryService;
+use controller\app\service\classes\ItemService;
 
 return [
     'menu' => [
@@ -14,8 +13,7 @@ return [
         ]
     ],
     'path' => dirname($_SERVER['SCRIPT_NAME']),
-    'category' => new Categorie(),
-    'category_service' => new CategoryService(),
-    'department_service' => $dpt = new DepartmentAction(),
-    'object_service' => $obj = new ObjetControlleur(),
+    'category_service' => new CategoryService,
+    'department_service' => new DepartmentAction,
+    'item_service' => new ItemService
 ];

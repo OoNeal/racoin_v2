@@ -32,8 +32,8 @@ class AddItemAction extends AbstractAction
      */
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $array = $this->objectService->formatterTableau($request->getParsedBody());
-        $errors = $this->objectService->estChampVide($array);
+        $array = $this->itemService->formatterTableau($request->getParsedBody());
+        $errors = $this->itemService->estChampVide($array);
         $twig = Twig::fromRequest($request);
 
         // S'il y a des erreurs on redirige vers la page d'erreur
@@ -50,7 +50,7 @@ class AddItemAction extends AbstractAction
         $annonce = new Annonce();
         $annonceur = new Annonceur();
 
-        $this->objectService->CreerHtmlEntites($array, $annonce);
+        $this->itemService->CreerHtmlEntites($array, $annonce);
         $annonceur->save();
         $annonceur->annonce()->save($annonce);
         return $twig->render($response, "add_confirm.html.twig",
