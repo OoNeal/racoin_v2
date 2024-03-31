@@ -28,6 +28,7 @@ class ApiHomeAction extends AbstractAction
             )
         );
 
+        $this->logger->info("Api");
         return $twig->render(
             $response, 'api.html.twig',
             array(

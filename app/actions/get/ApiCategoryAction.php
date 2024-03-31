@@ -33,6 +33,8 @@ class ApiCategoryAction extends AbstractAction
         $links['self']['href'] = '/api/categorie/' . $id;
         $c->links = $links;
         $c->annonces = $a;
+
+        $this->logger->info("Category id: $id");
         $response->getBody()->write(json_encode($c));
         return $response->withHeader('Content-Type', 'application/json');
     }

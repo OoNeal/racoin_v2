@@ -36,6 +36,8 @@ class ApiAnnonceAction extends AbstractAction
         $links = [];
         $links['self']['href'] = '/api/annonce/' . $return->id_annonce;
         $return->links = $links;
+
+        $this->logger->info("Annonce id: $id");
         $response->getBody()->write(json_encode($return));
         return $response->withHeader('Content-Type', 'application/json');
     }
