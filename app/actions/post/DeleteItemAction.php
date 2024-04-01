@@ -14,7 +14,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class DeleteItem extends AbstractAction
+class DeleteItemAction extends AbstractAction
 {
 
     /**
@@ -39,11 +39,14 @@ class DeleteItem extends AbstractAction
         $annonce = Annonce::find($args['id']);
         $twig = Twig::fromRequest($request);
         $reponse = false;
-        if (password_verify($_POST["pass"], $annonce->mdp)) {
-            $reponse = true;
-            photo::where('id_annonce', '=', $args['id'])->delete();
-            $annonce->delete();
+        if(isset($_POST["pass"])) {
+            if (password_verify($_POST["pass"], $annonce->mdp)) {
+                $reponse = true;
+                photo::where('id_annonce', '=', $args['id'])->delete();
+                $annonce->delete();
+            }
         }
+
 
         return $twig->render(
             $response, "delete_item_post.html.twig",
