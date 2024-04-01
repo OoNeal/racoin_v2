@@ -10,6 +10,9 @@ use Psr\Container\ContainerInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class AdvertiserAction extends AbstractAction
 {
@@ -22,6 +25,15 @@ class AdvertiserAction extends AbstractAction
         parent::__construct($container);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $annonceur = annonceur::find($args['id']);
@@ -43,7 +55,11 @@ class AdvertiserAction extends AbstractAction
         );
     }
 
-    private function getAnnonces($id_annonceur)
+    /**
+     * @param $id_annonceur
+     * @return array
+     */
+    private function getAnnonces($id_annonceur): array
     {
         $tmp = annonce::where('id_annonceur', '=', $id_annonceur)->get();
 

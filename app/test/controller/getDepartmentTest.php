@@ -2,8 +2,8 @@
 
 namespace controller\app\test\controller;
 
-use controller\app\actions\get\DepartmentAction;
 use controller\app\db\connection;
+use controller\app\service\classes\DepartmentService;
 use PHPUnit\Framework\TestCase;
 
 class getDepartmentTest extends TestCase
@@ -17,7 +17,7 @@ class getDepartmentTest extends TestCase
 
     public function testGetAllDepartments()
     {
-        $getDepartment = new DepartmentAction();
+        $getDepartment = new DepartmentService();
         $departments = $getDepartment->getDepartments();
         $this->assertIsArray($departments);
         $this->assertNotEmpty($departments);

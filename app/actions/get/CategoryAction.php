@@ -8,19 +8,35 @@ use controller\app\model\Annonceur;
 use controller\app\model\Categorie;
 use controller\app\model\Photo;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class CategoryAction extends AbstractAction
 {
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
     }
 
-    public function __invoke(Request $request, Response $response, array $args)
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function __invoke(Request $request, Response $response, array $args): ResponseInterface
     {
         $twig = Twig::fromRequest($request);
 
@@ -41,7 +57,12 @@ class CategoryAction extends AbstractAction
         );
     }
 
-    public function getCategorieContent($chemin, $n)
+    /**
+     * @param $chemin
+     * @param $n
+     * @return array
+     */
+    public function getCategorieContent($chemin, $n): array
     {
         $tmp = Annonce::with("Annonceur")->orderBy('id_annonce', 'desc')->where('id_categorie', "=", $n)->get();
         $annonce = [];

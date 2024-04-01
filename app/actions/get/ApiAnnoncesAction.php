@@ -23,6 +23,12 @@ class ApiAnnoncesAction extends AbstractAction
      *     )
      * )
      */
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response|Message
+     */
     public function __invoke(Request $request, Response $response, array $args): Response|Message
     {
         $annonceList = ['id_annonce', 'prix', 'titre', 'ville'];

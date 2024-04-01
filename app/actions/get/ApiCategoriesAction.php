@@ -12,12 +12,7 @@ use Slim\Psr7\Response;
 class ApiCategoriesAction extends AbstractAction
 {
 
-    /**
-     * @param  Request  $request
-     * @param  Response $response
-     * @param  array    $args
-     * @return Response|Message
-     */
+
     /**
      * @OA\Get(
      *     path="/api/categories",
@@ -28,6 +23,12 @@ class ApiCategoriesAction extends AbstractAction
      *         description="Succès",
      *     )
      * )
+     */
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response|Message
      */
     public function __invoke(Request $request, Response $response, array $args): Response|Message
     {

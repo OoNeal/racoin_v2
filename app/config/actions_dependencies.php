@@ -1,13 +1,13 @@
 <?php
 
 
-use controller\app\actions\get\DepartmentAction;
 use controller\app\service\classes\CategoryService;
+use controller\app\service\classes\DepartmentService;
 use controller\app\service\classes\ItemService;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
-use Psr\Container\ContainerInterface;
 use Monolog\Logger;
+use Psr\Container\ContainerInterface;
 
 return [
     'menu' => [
@@ -18,7 +18,7 @@ return [
     ],
     'path' => dirname($_SERVER['SCRIPT_NAME']),
     'category_service' => new CategoryService,
-    'department_service' => new DepartmentAction,
+    'department_service' => new DepartmentService,
     'item_service' => new ItemService,
 
     'log.order.name' => 'order.log',
