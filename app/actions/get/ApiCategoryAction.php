@@ -5,6 +5,7 @@ namespace controller\app\actions\get;
 use controller\app\actions\AbstractAction;
 use controller\app\model\Annonce;
 use controller\app\model\Categorie;
+use OpenApi\Annotations as OA;
 use Slim\Psr7\Message;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -13,10 +14,29 @@ class ApiCategoryAction extends AbstractAction
 {
 
     /**
-     * @param  Request  $request
-     * @param  Response $response
-     * @param  array    $args
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
      * @return Response|Message
+     */
+    /**
+     * @OA\Get(
+     *     path="/api/categorie/{id}",
+     *     summary="Récupère les détails d'une catégorie spécifique",
+     *     tags={"Catégories"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="L'identifiant de la catégorie à récupérer",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Succès",
+     *     )
+     * )
+     * )
      */
     public function __invoke(Request $request, Response $response, array $args): Response|Message
     {

@@ -6,7 +6,8 @@
     "scripts": {
         "build": "node_modules/.bin/sass scss/master.scss public/stylesheets/master.css --style expanded",
         "build:prod": "node_modules/.bin/sass scss/master.scss public/stylesheets/master.css --style compressed",
-        "watch": "node_modules/.bin/sass --watch scss/master.scss public/stylesheets/master.css --style expanded"
+        "watch": "node_modules/.bin/sass --watch scss/master.scss public/stylesheets/master.css --style expanded",
+        "openapi:generate": "./vendor/bin/openapi ./actions/ -o ./config/openapi.json"
     },
     "author": "",
     "license": "ISC",

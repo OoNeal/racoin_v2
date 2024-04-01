@@ -4,6 +4,7 @@ namespace controller\app\actions\get;
 
 use controller\app\actions\AbstractAction;
 use controller\app\model\Categorie;
+use OpenApi\Annotations as OA;
 use Slim\Psr7\Message;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -16,6 +17,17 @@ class ApiCategoriesAction extends AbstractAction
      * @param  Response $response
      * @param  array    $args
      * @return Response|Message
+     */
+    /**
+     * @OA\Get(
+     *     path="/api/categories",
+     *     summary="Récupère la liste des catégories",
+     *     tags={"Catégories"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Succès",
+     *     )
+     * )
      */
     public function __invoke(Request $request, Response $response, array $args): Response|Message
     {
